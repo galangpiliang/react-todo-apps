@@ -1,0 +1,119 @@
+@import '../src/sass/variables.scss';
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: $background-color;
+    color: $white-color;
+}
+
+input {
+    width: 12rem;
+    height: 3rem;
+    border: 1px solid $color-3;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: .5rem;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.w-inherit {
+    width: inherit;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-color-1 {
+    color: $color-1;
+}
+
+.text-color-3 {
+    color: $color-3;
+}
+
+.btn {
+    width: 12rem;
+    height: 3rem;
+    border-radius: 2rem;
+    background-color: $color-1;
+    color: $white-color;
+    border: 1.2px solid $white-color;
+    font-size: 1.2em;
+    font-weight: bold;
+    &:hover {
+        cursor: pointer ;
+        box-shadow: 0 0 5px $color-2;
+    }
+}
+
+.p-1 {
+    padding: 1rem;
+}
+
+.my-1 {
+    margin: 1rem auto;
+}
+
+.my-2 {
+    margin: 2rem auto;
+}
+
+.mx-2 {
+    margin-left: 3rem;
+    margin-right: 3rem;
+}
+
+.mb-4 {
+    margin-bottom: 4rem;
+}
+
+.bg-1 {
+    background-color: white;
+}
+
+.bg-2 {
+    background-color: $color-1;
+}
+
+.container {
+    margin: auto;
+    max-width: $max-width;
+    height: $min-height;
+}
+
+@media (max-width: $max-width) {
+    .container {
+        height: $max-height;
+    }
+}
