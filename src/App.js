@@ -3,22 +3,18 @@ import './App.scss';
 import SignUp from './components/auths/SignUp';
 import SignIn from './components/auths/SignIn';
 import Dashboard from './components/dashboard/Dashboard';
-import {BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <div className="container">
-          <Route path='/' exact>
-            <Dashboard />
-          </Route>
-          <Route path='/signin' exact>
-            <SignIn />
-          </Route>
-          <Route path='/signup' exact>
-            <SignUp />
-          </Route>
+          <Switch>
+            <Route path='/signup' component={SignUp}/>
+            <Route path='/signin' component={SignIn}/>
+            <Route path='/' component={Dashboard}/>
+          </Switch>
         </div>
       </div>
     </BrowserRouter>
