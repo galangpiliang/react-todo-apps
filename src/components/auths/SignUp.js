@@ -41,8 +41,8 @@ function SignUp() {
     }
 
     return (
-        <div className='SignUp flex bg-1 h-100'>
-            <div className="left p-1 bg-2 flex flex-col h-100 w-30">
+        <div className='SignUp flex bg-white h-100'>
+            <div className="left p-1 bg-1 flex flex-col h-100 w-30">
                 <h3>[ Team B ] - Todos</h3>
                 <div className="text-center flex-grow  flex flex-col justify-center mb-4">
                     <h1 className='my-1'>Welcome Back!</h1>
@@ -54,11 +54,10 @@ function SignUp() {
             </div>
             <div className="right text-center flex-grow flex flex-col justify-center text-color-3">
                 <h1 className='text-color-1'>Created Account</h1>
-                <p>or use your email for registration</p>
-                <input id='fullname' value={input.fullname} onChange={handleInput} className='w-inherit mx-2' type="text" placeholder="Name" required/>
-                <input id='email' value={input.email} onChange={handleInput} className='w-inherit mx-2' type="text" placeholder="Email" required/>
-                <input id='password' value={input.password} onChange={handleInput} className='w-inherit mx-2' type="password" placeholder="Password" required/>
-                <input id='password_confirmation' value={input.password_confirmation} onChange={handleInput} className='w-inherit mx-2' type="password" placeholder="Confirm Password" required/>
+                <input id='fullname' value={input.fullname} onChange={handleInput} className='form-input w-inherit mx-2' type="text" placeholder="Name" required/>
+                <input id='email' value={input.email} onChange={handleInput} className='form-input w-inherit mx-2' type="text" placeholder="Email" required/>
+                <input id='password' value={input.password} onChange={handleInput} className='form-input w-inherit mx-2' type="password" placeholder="Password" required/>
+                <input id='password_confirmation' value={input.password_confirmation} onChange={handleInput} className='form-input w-inherit mx-2' type="password" placeholder="Confirm Password" required/>
                 <button className='btn my-2' onClick={() => doRegister()}>SIGN UP</button>
             </div>
         </div>

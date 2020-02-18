@@ -1,0 +1,7 @@
+@mixin hover {
+    &:not([disabled]):hover {
+        cursor: pointer ;
+        opacity: .8;
+    }
+}
+  
