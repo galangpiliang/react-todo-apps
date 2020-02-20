@@ -18,7 +18,7 @@ function SignIn() {
             password: '',
         }
     )
-
+    
     const handleInput = e => {
         setInput({
             ...input,
@@ -41,7 +41,7 @@ function SignIn() {
     return (
         <div className='SignUp flex bg-white h-100'>
             <div className="left p-1 bg-1 flex flex-col h-100 w-30">
-                <h3>[ Team B ] - Todos</h3>
+                <h3>[ Team B ] - doDo</h3>
                 <div className="text-center flex-grow  flex flex-col justify-center mb-4">
                     <h1 className='my-1'>Hello Friend!</h1>
                     <p className='my-1'>Enter your personal details and start your journey with us</p>
@@ -51,10 +51,11 @@ function SignIn() {
                 </div>
             </div>
             <div className="right text-center flex-grow flex flex-col justify-center text-color-3">
+                <img className='obj-cover mw-10 mx-auto' src='https://ik.imagekit.io/m1ke1magek1t/default_image/doDO_Logo_90Nm1gqE1.png' alt="Logo app"/>
                 <h1 className='text-color-1'>Sign in to Task Manager</h1>
                 <input id='email' value={input.email} onChange={handleInput} className='form-input w-inherit mx-2' type="text" placeholder="Email" required/>
                 <input id='password' value={input.password} onChange={handleInput} className='form-input w-inherit mx-2' type="password" placeholder="Password" required/>
-                <button className='btn my-2' onClick={() => doLogin()}>SIGN IN</button>
+                <button className='btn my-2 m-auto' onClick={() => doLogin()}>SIGN IN</button>
             </div>
         </div>
     )

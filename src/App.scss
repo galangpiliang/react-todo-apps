@@ -115,8 +115,13 @@ body {
 .text-white {
     color: $white-color;
 }
+
 .text-black {
     color: $black-color;
+}
+
+.text-strike{
+    text-decoration: line-through;
 }
 
 .p-0 {
@@ -140,8 +145,17 @@ body {
     margin: auto;
 }
 
+.mx-auto{
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .ml-0 {
     margin-left: 0;
+}
+
+.ml-1 {
+    margin-left: 1rem;
 }
 
 .mt-1 {
