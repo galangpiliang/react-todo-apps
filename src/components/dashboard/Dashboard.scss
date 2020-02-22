@@ -1,0 +1,26 @@
+@import '../../sass/variables.scss';
+@import '../../sass/mixins.scss';
+
+.modal {
+    position: absolute;
+    left: 0;
+    background-color: rgba(black, .5);
+    z-index: 10;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+}
+  
+.profile-image:hover .overlay {
+    opacity: 1;
+}

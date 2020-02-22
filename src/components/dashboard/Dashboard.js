@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import axios from 'axios';
+import './Dashboard.scss';
 
 function Dashboard({match}) {
     const history = useHistory();
@@ -23,7 +24,7 @@ function Dashboard({match}) {
     })
 
     const baseUrl = 'https://awesome-project-glints.herokuapp.com/api/v1';
-    const setToken = {
+    let setToken = {
         headers: {
             "Authorization" : (user ? user.token : false)
         }
@@ -61,10 +62,12 @@ function Dashboard({match}) {
             .then(res => {
                 setInput({})
                 doPage(1)
+                alert('Data successfully added')
             })
-            .catch( error =>
+            .catch( error => {
                 console.log(error)
-            )
+                alert('Data unsuccessfully added! please try again or contact the website admin')
+            })
     }
 
     const doUpdate = (id) => {
@@ -76,21 +79,38 @@ function Dashboard({match}) {
             .then(res => {
                 getTodos()
                 doToggle(id)
+                alert('Data successfully updated')
             })
-            .catch( error =>
+            .catch( error => {
                 console.log(error)
-            )
+                alert('Data unsuccessfully updated! please try again or contact the website admin')
+            })
     }
 
     const doUpdateProfile = (name,email) => {
-        const data = new FormData() 
-        data.append('image', inputFile)
         let userData = {
             fullname: inputUser[name],
-            // email: input[email],
-            image: data
+            email: inputUser[email]
         }
-        console.log(data)
+        axios.put(`${baseUrl}/users`, userData, setToken)
+            .then(res => {
+                let updatedUser = {
+                    ...user,
+                    ...res.data.data
+                }
+                setUser(updatedUser)
+                localStorage.setItem('user', JSON.stringify(updatedUser))
+                alert('Data successfully updated')
+            })
+            .catch( error => {
+                console.log(error)
+                alert('Data unsuccessfully updated! please try again or contact the website admin')
+            })
+    }
+
+    const doUploadImage = () => {
+        const data = new FormData() 
+        data.append('image', inputFile)
         axios.put(`${baseUrl}/users`, data, setToken)
             .then(res => {
                 console.log(res.data)
@@ -99,10 +119,12 @@ function Dashboard({match}) {
                     ...res.data.data
                 })
                 localStorage.setItem('user', JSON.stringify(user))
+                alert('Data successfully updated')
             })
-            .catch( error =>
+            .catch( error => {
                 console.log(error)
-            )
+                alert('Data unsuccessfully updated! please try again or contact the website admin')
+            })
     }
 
     const doComplete = (id) => {
@@ -114,10 +136,12 @@ function Dashboard({match}) {
             .then(res => {
                 console.log('update task')
                 getTodos()
+                alert('Data successfully updated')
             })
-            .catch( error =>
+            .catch( error => {
                 console.log(error)
-            )
+                alert('Data unsuccessfully updated! please try again or contact the website admin')
+            })
     }
 
     const doImportanceLevel = (id) => {
@@ -129,35 +153,43 @@ function Dashboard({match}) {
         axios.put(`${baseUrl}/tasks?id=${todo._id}`, task, setToken)
             .then(res => {
                 getTodos()
+                alert('Data successfully updated')
             })
-            .catch( error =>
+            .catch( error => {
                 console.log(error)
-            )
+                alert('Data unsuccessfully updated! please try again or contact the website admin')
+            })
     }
 
     const deleteTodo = (id) => {
         axios.delete(`${baseUrl}/tasks/?id=${id}`, setToken)
             .then(res => {
                 getTodos()
+                alert('Data successfully deleted')
             })
-            .catch( error =>
+            .catch( error => {
                 console.log(error)
-            )
+                alert('Data unsuccessfully deleted! please try again or contact the website admin')
+            })
     }
 
     const doLogout = () => {
         localStorage.clear();
+        alert('You are successfully Logout')
         history.push('/signin')
     }
 
-    const doToggle = (todo) => {
-        console.log(todo)
-        setToggle({
-            [todo._id]: !toggle[todo._id]
-        })
-        setInput({
-            [todo._id]: todo.title
-        })
+    const doToggle = (input) => {
+        typeof input === "string"
+        ?   setToggle({
+                [input]: !toggle[input]
+            }) 
+        :   setToggle({
+                [input._id]: !toggle[input._id]
+            })
+            setInput({
+                [input._id]: input.title
+            })
     }
 
     const doPage = (num) => {
@@ -181,7 +213,6 @@ function Dashboard({match}) {
     }
 
     const handleInputFile = (e) => {
-        console.log(e.target.files[0])
         setInputFile(e.target.files[0])
     }    
 
@@ -189,6 +220,16 @@ function Dashboard({match}) {
         if(!user){
             history.push('/signin')
         }
+        setInputUser({
+            ['userName']: user.fullname,
+            ['userEmail']: user.email
+        })
+        // setToken = {
+        //     headers: {
+        //         "Authorization" : (user ? user.token : false)
+        //     }
+        // }
+        console.log('asd',setToken)
         getTodos()
     },[filter,setUser])
 
@@ -206,21 +247,48 @@ function Dashboard({match}) {
 
     return (
         <div className='bg-4 text-black h-100'>
-            <div className="modal hide">
-                <div className="modal-content">
-                    <input id='userName' type="text" className="updateprofil" value={inputUser['userName']} placeholder={user.fullname} onChange={handleInputUser}/>
-                    <input id='userEmail' type="email" className="updateprofil" value={inputUser['userEmail']} placeholder={user.email} onChange={handleInputUser}/>
-                    <input id='userImage' type="file" className="updateprofil" onChange={handleInputFile}/>
-                    <button onClick={() => doUpdateProfile('userName','userEmail')}>Update</button>
+            {
+                !toggle['modalProfile'] ? false :
+                <div className="modal flex w-100 h-100">
+                    <div className="modal-content align-center m-auto flex flex-col minw-30 br">
+                        <h1>Update Profile</h1>
+                        <input id='userName' type="text" className='form-input w-100' value={inputUser['userName']} placeholder={user.fullname} onChange={handleInputUser}/>
+                        <input id='userEmail' type="email" className='form-input w-100' value={inputUser['userEmail']} placeholder={user.email} onChange={handleInputUser}/>
+                        <div className="wrapper flex">
+                            <button className='btn mt-1' onClick={() => doToggle('modalProfile')}>Close</button>
+                            <button className='btn mt-1 ml-1' onClick={() => {doToggle('modalProfile');doUpdateProfile('userName','userEmail')}}>Update</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            }
+            {
+                !toggle['modalUpload'] ? false :
+                <div className="modal flex w-100 h-100">
+                    <div className="modal-content align-center m-auto flex flex-col minw-30 br">
+                        <h1>Upload Image</h1>
+                        <input id='userImage' type="file" className='form-input w-100' onChange={handleInputFile}/>
+                        <div className="wrapper flex">
+                            <button className='btn mt-1' onClick={() => doToggle('modalUpload')}>Close</button>
+                            <button className='btn mt-1 ml-1' onClick={() => {doUploadImage();doToggle('modalUpload')}}>Upload</button>
+                        </div>
+                    </div>
+                </div>
+            }
             <div className='flex justify-sb bg-1 text-white h-10 align-center'>
                 <h3 className='mx-2'>[ Team B ] - doDo</h3>
-                <h3 className='hover mx-2'><span onClick={() => doLogout()}>SIGN OUT</span></h3>
+                <div className="wrapper flex">
+                    <h4 className='hover'><span onClick={() => doToggle('modalProfile')}>Update Profile</span></h4>
+                    <h4 className='hover mx-2'><span onClick={() => doLogout()}>SIGN OUT</span></h4>
+                </div>
             </div>
-            <div className="flex h-90">
-                <div className="left h-fit p-1 flex flex-col w-30 text-center justify-center">
-                    <img className='circle m-auto h-10rem mw-10 mt-1 obj-cover' src={user? user.image : profilePic} alt="Profile"/>
+            <div className="flex h-90 croll">
+                <div className="left h-fit p-1 flex flex-col w-30 w-tablet-auto text-center justify-center">
+                    <div class="profile-image relative">
+                        <img className='circle m-auto h-10rem mw-10 mt-1 obj-cover' src={user? user.image : profilePic} alt="Profile"/>
+                        <div class="overlay br">
+                            <button className='btn my-1' onClick={() => doToggle('modalUpload')}>Change Image</button>
+                        </div>
+                    </div>
                     <h2>{user? user.fullname : 'Empty Data'}</h2>
                     <button className='btn my-1' onClick={ () => setFilter({
                         type: false,
@@ -238,21 +306,23 @@ function Dashboard({match}) {
                         page: 1
                     })}>{filter.value === true ? 'Completed' : 'Uncompleted'}</button>
                 </div>
-                <div className="right w-70 flex-grow flex flex-col text-color-3 pr-2">
+                <div className="right flex-grow flex flex-col text-color-3 pr-2">
                     <div className="wrapper flex align-center mt-2">
                         <input id='form-addTask' className='form-input flex-grow ml-0' type="text" placeholder='add task...' value={input['form-addTask'] ? input['form-addTask'] : ''} onChange={handleInput}/>
                         <button className="btn" onClick={() => addTodo(input['form-addTask'])}>Add Task</button>
                     </div>
-                    <div className="wrapper text-black scroll">
+                    <div className="wrapper flex-grow text-black scroll">
                         <ul className='p-0'>
                             {
-                                Object.keys(todos).map(i => {
+                                todos.length < 1 
+                                ?<h4 className='text-center'>Task is empty, let's create a task using the input form above...</h4>
+                                :Object.keys(todos).map(i => {
                                     let todo = todos[i];
                                     return(
                                         <li className='flex align-center bg-white br px-1 my-1' key={todo._id}>
-                                            <input type="checkbox" className='zoom' onClick={() => doComplete(todo._id)} checked={todo.completion}/>
+                                            <input type="checkbox" className='zoom' onChange={() => doComplete(todo._id)} checked={todo.completion}/>
                                             {   
-                                                !toggle[todo._id]
+                                                !toggle[todo._id]   
                                                 ?(
                                                     <Fragment>
                                                         <p className={`mx-1 text-ellipsis ${todo.completion ? 'text-strike' : false}`}>{todo.title}</p>

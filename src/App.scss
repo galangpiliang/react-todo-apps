@@ -81,6 +81,14 @@ body {
     max-width: 10rem;
 }
 
+.minw-30 {
+    min-width: 30rem;
+}
+
+.relative {
+    position: relative;
+}
+
 .flex {
     display: flex;
 }
@@ -265,5 +273,11 @@ body {
 @media (max-width: $max-width) {
     .container {
         height: $max-height;
+    }
+}
+
+@media (max-width: $tablet-width) {
+    .w-tablet-auto {
+        width: auto;
     }
 }
