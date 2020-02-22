@@ -53,7 +53,7 @@ function SignUp() {
                 </div>
             </div>
             <div className="right text-center flex-grow flex flex-col justify-center text-color-3">
-                <img className='obj-cover mw-10 mx-auto' src='https://ik.imagekit.io/m1ke1magek1t/default_image/doDO_Logo_90Nm1gqE1.png' alt="Logo app"/>
+                {/* <img className='obj-cover mw-10 mx-auto' src='https://ik.imagekit.io/m1ke1magek1t/default_image/doDO_Logo_90Nm1gqE1.png' alt="Logo app"/> */}
                 <h1 className='text-color-1'>Created Account</h1>
                 <input id='fullname' value={input.fullname} onChange={handleInput} className='form-input w-inherit mx-2' type="text" placeholder="Name" required/>
                 <input id='email' value={input.email} onChange={handleInput} className='form-input w-inherit mx-2' type="text" placeholder="Email" required/>

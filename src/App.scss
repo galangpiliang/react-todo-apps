@@ -45,11 +45,12 @@ body {
     height: fit-content;
 }
 
-.test {
-    flex-grow: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.mh-10 {
+    max-height: 10rem;
+}
+
+.h-10rem {
+    height: 10rem;
 }
 
 .zoom {
@@ -62,6 +63,10 @@ body {
 
 .w-30 {
     width: 30%;
+}
+
+.w-10 {
+    width: 10rem;
 }
 
 .w-70 {
@@ -122,6 +127,13 @@ body {
 
 .text-strike{
     text-decoration: line-through;
+}
+
+.text-ellipsis {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .p-0 {
@@ -244,6 +256,10 @@ body {
 
 .obj-cover {
     object-fit: cover;
+}
+
+.hide {
+    display: none;
 }
 
 @media (max-width: $max-width) {
